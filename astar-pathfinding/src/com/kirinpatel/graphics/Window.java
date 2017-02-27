@@ -11,12 +11,12 @@ import javax.swing.*;
 /**
  *
  * @author Kirin Patel
- * @version 0.1
+ * @version 0.2
  * @see javax.swing.JFrame;
  */
 public class Window extends JFrame {
     
-    public static DrawPanel drawPanel;
+    public DrawPanel drawPanel;
     
     public Window(String title) {
         super(title);

@@ -6,13 +6,15 @@
 package com.kirinpatel.util;
 
 /**
- *
+ * This class contains all information pertaining to the Point class.
+ * 
  * @author Kirin Patel
- * @version 1.0
+ * @version 1.1
  */
 public class Point {
     
     private double x, y;
+    private boolean isStart, isEnd;
     
     /**
      * Main constructor that will set the x and y coordinate for a point.
@@ -23,6 +25,20 @@ public class Point {
     public Point(double x, double y) {
         setX(x);
         setY(y);
+    }
+    
+    public Point(double x, double y, boolean isStart, boolean isEnd) {
+        
+    }
+    
+    /**
+     * Provides a printable version of the Point class.
+     * 
+     * @return String version of Point
+     */
+    @Override
+    public String toString() {
+        return "( " + x + " , " + y + " )";
     }
     
     /**
@@ -41,6 +57,24 @@ public class Point {
      */
     public double getY() {
         return y;
+    }
+    
+    /**
+     * Provides if this point is the start.
+     * 
+     * @return If is start
+     */
+    public boolean isStart() {
+        return isStart;
+    }
+    
+    /**
+     * Provides if this point is the end.
+     * 
+     * @return If is end
+     */
+    public boolean isEnd() {
+        return isEnd;
     }
     
     /**
@@ -80,5 +114,23 @@ public class Point {
      */
     public void setY(double y) {
         this.y = y;
+    }
+    
+    /**
+     * Sets if this point is the start.
+     * 
+     * @param isStart Is start
+     */
+    public void setIsStart(boolean isStart) {
+        this.isStart = isStart;
+    }
+    
+    /**
+     * Sets if this point is the end.
+     * 
+     * @param isEnd Is end 
+     */
+    public void setIsEnd(boolean isEnd) {
+        this.isEnd = isEnd;
     }
 }
