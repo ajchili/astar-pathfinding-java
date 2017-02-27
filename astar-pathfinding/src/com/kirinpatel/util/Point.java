@@ -9,7 +9,7 @@ package com.kirinpatel.util;
  * This class contains all information pertaining to the Point class.
  * 
  * @author Kirin Patel
- * @version 1.1
+ * @version 1.2
  */
 public class Point {
     
@@ -27,8 +27,20 @@ public class Point {
         setY(y);
     }
     
+    /**
+     * Secondary constructor that will set the x and y coordinate for a point
+     * and will also set if a point is the start or end of a path.
+     * 
+     * @param x X coordinate
+     * @param y Y coordinate
+     * @param isStart Is start
+     * @param isEnd Is end
+     */
     public Point(double x, double y, boolean isStart, boolean isEnd) {
-        
+        setX(x);
+        setY(y);
+        setIsStart(isStart);
+        setIsEnd(isEnd);
     }
     
     /**

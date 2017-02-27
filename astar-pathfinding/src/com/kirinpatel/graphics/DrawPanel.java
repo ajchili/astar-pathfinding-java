@@ -5,14 +5,15 @@
  */
 package com.kirinpatel.graphics;
 
+import com.kirinpatel.util.Point;
+import com.kirinpatel.util.Line;
 import java.awt.*;
 import javax.swing.*;
-import com.kirinpatel.util.Point;
 
 /**
  *
  * @author Kirin Patel
- * @version 0.2
+ * @version 0.3
  * @see javax.swing.JPanel
  * @see com.kirinpatel.util.Point
  */
@@ -20,10 +21,12 @@ public class DrawPanel extends JPanel {
     
     private int width, height;
     private Point[] points;
+    private Line[] lines;
     
     public DrawPanel() {
         super();
         points = new Point[0];
+        lines = new Line[0];
     }
     
     /**
@@ -35,14 +38,28 @@ public class DrawPanel extends JPanel {
         
         width = getWidth();
         height = getHeight();
-        System.out.println(width + " " + height);
         
-        g.setColor(Color.GRAY);
+        getLines();
+        
+        g.setColor(Color.darkGray);
         g.fillRect(0, 0, getWidth(), getHeight());
         
+        g.setColor(Color.ORANGE);
+        for (int i= 0; i < lines.length; i++) {
+            g.drawLine((int) lines[i].getX1() + 5, (int) lines[i].getY1() + 5, (int) lines[i].getX2() + 5, (int) lines[i].getY2() + 5);
+        }
+        
         for (int i = 0; i < points.length; i++) {
-            g.setColor(Color.YELLOW);
-            g.fillOval((int) points[i].getX(), (int) points[i].getY(), 10, 10);
+            if (points[i].isStart()) {
+                g.setColor(Color.GREEN);
+                g.fillRoundRect((int) points[i].getX(), (int) points[i].getY(), 10, 10, 5, 5);
+            } else if (points[i].isEnd()) {
+                g.setColor(Color.BLUE);
+                g.fillRoundRect((int) points[i].getX(), (int) points[i].getY(), 10, 10, 5, 5);
+            } else {
+                g.setColor(Color.YELLOW);
+                g.fillOval((int) points[i].getX(), (int) points[i].getY(), 10, 10);
+            }
         }
     }
     
@@ -91,5 +108,55 @@ public class DrawPanel extends JPanel {
         points[index] = p;
         
         repaint();
+    }
+    
+    public void setStart(int index) {
+        for (int i = 0; i < points.length; i++) {
+            if (i != index) {
+                points[i].setIsStart(false);
+            } else {
+                points[i].setIsStart(true);
+            }
+        }
+        
+        repaint();
+    }
+    
+    public void setEnd(int index) {
+        for (int i= 0; i < points.length; i++) {
+            if (i != index) {
+                points[i].setIsEnd(false);
+            } else {
+                points[i].setIsEnd(true);
+            }
+        }
+        
+        repaint();
+    }
+    
+    public void addLine(Line l) {
+        int size = lines.length + 1;
+        
+        Line[] oldLines = lines;
+        lines = new Line[size];
+        for (int i = 0; i < size; i++) {
+            if (i != oldLines.length) {
+                lines[i] = oldLines[i];
+            } else {
+                lines[i] = l;
+            }
+        }
+    }
+    
+    public void getLines() {
+        lines = new Line[0];
+        
+        for (int i = 0; i < points.length; i++) {
+            for (int j = 0; j < points.length; j++) {
+                if (i != j) {
+                    addLine(new Line(points[i], points[j]));
+                }
+            }
+        }
     }
 }

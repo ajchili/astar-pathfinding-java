@@ -14,7 +14,7 @@ import javax.swing.*;
 /**
  *
  * @author Kirin Patel
- * @version 0.2
+ * @version 0.3
  * @see javax.swing.JPanel
  */
 public class InputPanel extends JPanel {
@@ -58,11 +58,11 @@ public class InputPanel extends JPanel {
                             chords[i] = Double.parseDouble(inputs[i]);
                         } catch (NumberFormatException ex) {
                             JOptionPane.showMessageDialog(null, "Please enter a valid coordinate.");
-                            break;
+                            return;
                         }      
                     } else { 
                         JOptionPane.showMessageDialog(null, "Please enter a x and y coordinate.");
-                        break;
+                        return;
                     }
                 }
                 
@@ -92,19 +92,28 @@ public class InputPanel extends JPanel {
         coordinateEditButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (pointBox.getItemCount() == 0) {
+                    JOptionPane.showMessageDialog(null, "No points to select.");
+                    return;
+                }
+                
                 switch(coordinateEditBox.getSelectedIndex()) {
                     case 0:
+                        Main.window.drawPanel.editPoint(pointBox.getSelectedIndex(), new Point(Double.parseDouble(JOptionPane.showInputDialog("X coordinate:")), Double.parseDouble(JOptionPane.showInputDialog("Y coordinate:"))));
                         break;
                     case 1:
                         Main.window.drawPanel.removePoint(pointBox.getSelectedIndex());
-                        pointBox.setModel(new DefaultComboBoxModel<Point>(Main.window.drawPanel.getPoints()));
                         break;
                     case 2:
+                        Main.window.drawPanel.setStart(pointBox.getSelectedIndex());
                         break;
                     case 3:
+                        Main.window.drawPanel.setEnd(pointBox.getSelectedIndex());
                         break;
                     default:
                 }
+                        
+                pointBox.setModel(new DefaultComboBoxModel<Point>(Main.window.drawPanel.getPoints()));
             }
         });
         
