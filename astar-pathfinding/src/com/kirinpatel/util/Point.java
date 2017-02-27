@@ -9,7 +9,7 @@ package com.kirinpatel.util;
  * This class contains all information pertaining to the Point class.
  * 
  * @author Kirin Patel
- * @version 1.2
+ * @version 1.3
  */
 public class Point {
     
@@ -51,6 +51,22 @@ public class Point {
     @Override
     public String toString() {
         return "( " + x + " , " + y + " )";
+    }
+    
+    /**
+     * Provides if given object is equal to this Point.
+     * 
+     * @param o Object
+     * @return Returns if object is equal to point
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Point)) {
+            return false;
+        } else {
+            Point objP = (Point) o;
+            return ((getX() == objP.getX()) && (getY() == objP.getY()) && (isStart == objP.isStart()) && (isEnd == objP.isEnd()));
+        }
     }
     
     /**
@@ -135,6 +151,9 @@ public class Point {
      */
     public void setIsStart(boolean isStart) {
         this.isStart = isStart;
+        if (isStart) {
+            this.isEnd = false;
+        }
     }
     
     /**
@@ -144,5 +163,8 @@ public class Point {
      */
     public void setIsEnd(boolean isEnd) {
         this.isEnd = isEnd;
+        if (isEnd) {
+            this.isStart = false;
+        }
     }
 }

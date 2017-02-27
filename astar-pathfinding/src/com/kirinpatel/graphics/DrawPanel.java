@@ -13,9 +13,10 @@ import javax.swing.*;
 /**
  *
  * @author Kirin Patel
- * @version 0.3
+ * @version 0.4
  * @see javax.swing.JPanel
  * @see com.kirinpatel.util.Point
+ * @see com.kirinpatel.util.Line
  */
 public class DrawPanel extends JPanel {
     
@@ -23,6 +24,9 @@ public class DrawPanel extends JPanel {
     private Point[] points;
     private Line[] lines;
     
+    /**
+     * Main constructor that will setup the DrawPanel class.
+     */
     public DrawPanel() {
         super();
         points = new Point[0];
@@ -39,7 +43,7 @@ public class DrawPanel extends JPanel {
         width = getWidth();
         height = getHeight();
         
-        getLines();
+        createLines();
         
         g.setColor(Color.darkGray);
         g.fillRect(0, 0, getWidth(), getHeight());
@@ -67,6 +71,28 @@ public class DrawPanel extends JPanel {
         return points;
     }
     
+    public Point getStart() {
+        for (Point p : points) {
+            if (p.isStart())
+                return p;
+        }
+        
+        return null;
+    }
+    
+    public Point getEnd() {
+        for (Point p : points) {
+            if (p.isEnd())
+                return p;
+        }
+        
+        return null;
+    }
+    
+    public Line[] getLines() {
+        return lines;
+    }
+    
     public void addPoint(Point p) {
         int size = points.length + 1;
         
@@ -84,6 +110,9 @@ public class DrawPanel extends JPanel {
     }
     
     public void removePoint(int index) {
+        if (points.length == 0)
+            return;
+        
         int size = points.length - 1;
         
         if (size == 0) {
@@ -148,13 +177,49 @@ public class DrawPanel extends JPanel {
         }
     }
     
-    public void getLines() {
+    public void removeLine(int index) {
+        if (lines.length == 0)
+            return;
+        
+        int size = lines.length - 1;
+        
+        if (size == 0) {
+            lines = new Line[0];
+        } else {
+            Line[] oldLines = lines;
+            lines = new Line[size];
+            
+            for (int i = 0; i < index; i++) {
+                lines[i] = oldLines[i];
+            }
+            
+            for (int i = (index + 1); i < oldLines.length; i++) {
+                lines[i - 1] = oldLines[i];
+            }
+        }
+    }
+    
+    public boolean doesLineExist(Line l) {
+        for (int i = 0; i < lines.length; i++) {
+            if (lines[i].equals(l)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public void createLines() {
         lines = new Line[0];
         
         for (int i = 0; i < points.length; i++) {
             for (int j = 0; j < points.length; j++) {
                 if (i != j) {
-                    addLine(new Line(points[i], points[j]));
+                    if (!doesLineExist(new Line(points[i], points[j]))) {
+                        if (!(points[i].isStart() || points[i].isEnd())) {
+                            addLine(new Line(points[i], points[j]));
+                        }
+                    }
                 }
             }
         }

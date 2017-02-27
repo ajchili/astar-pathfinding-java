@@ -9,7 +9,7 @@ package com.kirinpatel.util;
  * This class contains all information pertaining to the Line class.
  * 
  * @author Kirin Patel
- * @version 1.0
+ * @version 1.1
  */
 public class Line {
     
@@ -39,6 +39,35 @@ public class Line {
     public Line(Point p1, Point p2) {
         setStart(p1.getX(), p1.getY());
         setEnd(p2.getX(), p2.getY());
+    }
+    
+    /**
+     * Provides a printable version of the Line class.
+     * 
+     * @return String version of Line
+     */
+    @Override
+    public String toString() {
+        return "This line starts at ( " + x1 + " , " + y1 + " ) and runs to ( " + x2 + " , " + y2 + " ). Its length is " + getLength() + ".";
+    }
+    
+    /**
+     * Provides if given object is equal to this Line.
+     * 
+     * @param o Object
+     * @return Returns if object is equal to line
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Line)) {
+            return false;
+        } else {
+            Line objL = (Line) o;
+            boolean exactSame = ((x1 == objL.getX1()) && (y1 == objL.getY1()) && (x2 == objL.getX2()) && (y2 == objL.getY2()));
+            boolean flipped = ((x1 == objL.getX2()) && (y1 == objL.getY2()) && (x2 == objL.getX1()) && (y2 == objL.getY1()));
+            
+            return exactSame || flipped;
+        }
     }
     
     /**
