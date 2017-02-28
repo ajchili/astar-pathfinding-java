@@ -7,16 +7,18 @@ package com.kirinpatel.graphics;
 
 import com.kirinpatel.util.Point;
 import com.kirinpatel.util.Line;
+import com.kirinpatel.util.Node;
 import java.awt.*;
 import javax.swing.*;
 
 /**
  *
  * @author Kirin Patel
- * @version 0.5
+ * @version 0.6
  * @see javax.swing.JPanel
  * @see com.kirinpatel.util.Point
  * @see com.kirinpatel.util.Line
+ * @see com.kirinpatel.util.Node
  */
 public class DrawPanel extends JPanel {
     
@@ -251,45 +253,6 @@ public class DrawPanel extends JPanel {
     public Line[] getPath() {
         if (lines.length == 0 || getStart() == null || getEnd() == null)
             return null;
-        
-        boolean hasReachedEnd = false;
-        Point currentLocation = getStart();
-        double distanceToEnd = getStart().getDistance(getEnd());
-        path = new Line[0];
-        
-        do {
-            double newShortestDistance = 0;
-            Point newLocation;
-            
-            if (currentLocation.equals(getEnd())) {
-                hasReachedEnd = true;
-            }
-            
-            Point[] possiblePoints = new Point[0];
-            
-            for (Point p : points) {
-                if (p.getDistance(getEnd()) < distanceToEnd) {
-                    int size = possiblePoints.length + 1;
-                    Point[] oldPossiblePoints = possiblePoints;
-                    possiblePoints = new Point[size];
-                    for (int j = 0; j < size; j++) {
-                        if (j != oldPossiblePoints.length) {
-                            possiblePoints[j] = oldPossiblePoints[j];
-                        } else {
-                            possiblePoints[j] = p;
-                        }
-                    }
-                } else if (p.getDistance(getEnd()) == 0) {
-                    hasReachedEnd = true;
-                }
-            }
-            
-            System.out.println(possiblePoints.length);
-            for (Point p : possiblePoints) {
-                System.out.println(p.toString());
-            }
-            hasReachedEnd = true;
-        } while(!hasReachedEnd);
         
         return path;
     }
