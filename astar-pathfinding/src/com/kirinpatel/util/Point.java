@@ -5,15 +5,20 @@
  */
 package com.kirinpatel.util;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 /**
  * This class contains all information pertaining to the Point class.
  * 
  * @author Kirin Patel
- * @version 1.3
+ * @version 1.4
+ * @see java.awt.Color
+ * @see java.awt.Graphics
  */
 public class Point {
     
-    private double x, y;
+    private int x, y;
     private boolean isStart, isEnd;
     
     /**
@@ -22,7 +27,7 @@ public class Point {
      * @param x X coordinate
      * @param y Y coordinate
      */
-    public Point(double x, double y) {
+    public Point(int x, int y) {
         setX(x);
         setY(y);
     }
@@ -36,7 +41,7 @@ public class Point {
      * @param isStart Is start
      * @param isEnd Is end
      */
-    public Point(double x, double y, boolean isStart, boolean isEnd) {
+    public Point(int x, int y, boolean isStart, boolean isEnd) {
         setX(x);
         setY(y);
         setIsStart(isStart);
@@ -70,11 +75,29 @@ public class Point {
     }
     
     /**
+     * Draws point with given graphics object.
+     * 
+     * @param g Graphics
+     */
+    public void draw(Graphics g) {
+        if (isStart) {
+            g.setColor(Color.GREEN);
+            g.fillRoundRect(x, y, 10, 10, 5, 5);
+        } else if (isEnd) {
+            g.setColor(Color.BLUE);
+            g.fillRoundRect(x, y, 10, 10, 5, 5);
+        } else {
+            g.setColor(Color.YELLOW);
+            g.fillOval(x, y, 10, 10);
+        }
+    }
+    
+    /**
      * Provides x coordinate.
      * 
      * @return X coordinate
      */
-    public double getX() {
+    public int getX() {
         return x;
     }
     
@@ -83,7 +106,7 @@ public class Point {
      * 
      * @return Y coordinate
      */
-    public double getY() {
+    public int getY() {
         return y;
     }
     
@@ -112,7 +135,7 @@ public class Point {
      * @param y Y coordinate of point
      * @return Distance between points
      */
-    public double getDistanceToPoint(double x, double y) {
+    public double getDistanceToPoint(int x, int y) {
         return Math.sqrt((Math.pow(Math.abs(x) - Math.abs(this.x),2) + Math.pow(Math.abs(y) - Math.abs(this.y), 2)));
     }
     
@@ -131,7 +154,7 @@ public class Point {
      * 
      * @param x X coordinate
      */
-    public void setX(double x) {
+    public void setX(int x) {
         this.x = x;
     }
     
@@ -140,7 +163,7 @@ public class Point {
      * 
      * @param y Y coordinate
      */
-    public void setY(double y) {
+    public void setY(int y) {
         this.y = y;
     }
     

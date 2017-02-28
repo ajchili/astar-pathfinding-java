@@ -5,15 +5,20 @@
  */
 package com.kirinpatel.util;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 /**
  * This class contains all information pertaining to the Line class.
  * 
  * @author Kirin Patel
- * @version 1.1
+ * @version 1.2
+ * @see java.awt.Color
+ * @see java.awt.Graphics
  */
 public class Line {
     
-    private double x1, y1, x2, y2;
+    private int x1, y1, x2, y2;
     
     /**
      * Main constructor that will create a line with provided start and end
@@ -24,7 +29,7 @@ public class Line {
      * @param x2 Ending x coordinate
      * @param y2 Ending y coordinate
      */
-    public Line(double x1, double y1, double x2, double y2) {
+    public Line(int x1, int y1, int x2, int y2) {
         setStart(x1, y1);
         setEnd(x2, y2);
     }
@@ -71,11 +76,21 @@ public class Line {
     }
     
     /**
+     * Draws line with given graphics object.
+     * 
+     * @param g Graphics
+     */
+    public void draw(Graphics g) {
+        g.setColor(Color.ORANGE);
+        g.drawLine(x1 + 5, y1 + 5, x2 + 5, y2 + 5);
+    }
+    
+    /**
      * Provides the starting x coordinate.
      * 
      * @return Returns starting x coordinate
      */
-    public double getX1() {
+    public int getX1() {
         return x1;
     }
     
@@ -84,7 +99,7 @@ public class Line {
      * 
      * @return Returns starting y coordinate
      */
-    public double getY1() {
+    public int getY1() {
         return y1;
     }
     
@@ -93,7 +108,7 @@ public class Line {
      * 
      * @return Returns ending x coordinate
      */
-    public double getX2() {
+    public int getX2() {
         return x2;
     }
     
@@ -102,7 +117,7 @@ public class Line {
      * 
      * @return Returns ending y coordinate
      */
-    public double getY2() {
+    public int getY2() {
         return y2;
     }
     
@@ -120,7 +135,7 @@ public class Line {
      * 
      * @param x Starting x coordinate
      */
-    public void setStartingX(double x) {
+    public void setStartingX(int x) {
         this.x1 = x;
     }
     
@@ -129,7 +144,7 @@ public class Line {
      * 
      * @param y Starting y coordinate
      */
-    public void setStartingY(double y) {
+    public void setStartingY(int y) {
         this.y1 = y;
     }
     
@@ -139,7 +154,7 @@ public class Line {
      * @param x Starting x coordinate
      * @param y Starting y coordinate
      */
-    public void setStart(double x, double y) {
+    public void setStart(int x, int y) {
         setStartingX(x);
         setStartingY(y);
     }
@@ -149,7 +164,7 @@ public class Line {
      * 
      * @param x Ending x coordinate
      */
-    public void setEndingX(double x) {
+    public void setEndingX(int x) {
         this.x2 = x;
     }
     
@@ -158,7 +173,7 @@ public class Line {
      * 
      * @param y Ending y coordinate
      */
-    public void setEndingY(double y) {
+    public void setEndingY(int y) {
         this.y2 = y;
     }
     
@@ -168,7 +183,7 @@ public class Line {
      * @param x Ending x coordinate
      * @param y Ending y coordinate
      */
-    public void setEnd(double x, double y) {
+    public void setEnd(int x, int y) {
         setEndingX(x);
         setEndingY(y);
     }

@@ -51,22 +51,12 @@ public class DrawPanel extends JPanel {
         g.setColor(Color.darkGray);
         g.fillRect(0, 0, getWidth(), getHeight());
         
-        g.setColor(Color.ORANGE);
-        for (int i= 0; i < lines.length; i++) {
-            g.drawLine((int) lines[i].getX1() + 5, (int) lines[i].getY1() + 5, (int) lines[i].getX2() + 5, (int) lines[i].getY2() + 5);
+        for (Line l : lines) {
+            l.draw(g);
         }
         
-        for (int i = 0; i < points.length; i++) {
-            if (points[i].isStart()) {
-                g.setColor(Color.GREEN);
-                g.fillRoundRect((int) points[i].getX(), (int) points[i].getY(), 10, 10, 5, 5);
-            } else if (points[i].isEnd()) {
-                g.setColor(Color.BLUE);
-                g.fillRoundRect((int) points[i].getX(), (int) points[i].getY(), 10, 10, 5, 5);
-            } else {
-                g.setColor(Color.YELLOW);
-                g.fillOval((int) points[i].getX(), (int) points[i].getY(), 10, 10);
-            }
+        for (Point p : points) {
+            p.draw(g);
         }
     }
     

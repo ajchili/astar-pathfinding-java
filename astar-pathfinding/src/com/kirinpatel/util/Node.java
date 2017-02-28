@@ -5,10 +5,12 @@
  */
 package com.kirinpatel.util;
 
+import java.awt.Graphics;
+
 /**
  *
  * @author Kirin Patel
- * @version 0.1
+ * @version 0.2
  * @see com.kirinpatel.util.Line
  * @see com.kirinpatel.util.Point
  */
@@ -41,6 +43,18 @@ public class Node {
         }
     }
     
+    /**
+     * Draws node with given graphics object.
+     * 
+     * @param g Graphics
+     */
+    public void draw(Graphics g) {
+        point.draw(g);
+        for (Line l : connectedLines) {
+            l.draw(g);
+        }
+    }
+    
     public Point getPoint() {
         return point;
     }
@@ -53,11 +67,11 @@ public class Node {
         return connectedLines;
     }
     
-    public double getX() {
+    public int getX() {
         return point.getX();
     }
     
-    public double getY() {
+    public int getY() {
         return point.getY();
     }
     
@@ -125,7 +139,7 @@ public class Node {
             if (i != 0) {
                 nextDestination = possiblePointsToBeNextNode[i];
             } else {
-                
+                // TODO: Finish this
             }
         }
         

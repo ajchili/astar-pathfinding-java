@@ -14,7 +14,7 @@ import javax.swing.*;
 /**
  *
  * @author Kirin Patel
- * @version 1.0
+ * @version 1.1
  * @see javax.swing.JPanel
  * @see com.kirinpatel.graphics.DrawPanel
  * @see com.kirinpatel.util.Point
@@ -38,8 +38,8 @@ public class InputPanel extends JPanel {
         addCoordinatePanel.setLayout(new GridLayout(1, 3));
         add(coordinateEditPanel);
         
-        JTextField xCoordinate = new JTextField();
-        JTextField yCoordinate = new JTextField();
+        JSpinner xCoordinate = new JSpinner(new SpinnerNumberModel(0, 0, 1280, 1));
+        JSpinner yCoordinate = new JSpinner(new SpinnerNumberModel(0, 0, 720, 1));
         JButton addPoint = new JButton("Add point");    
         
         JButton coordinateEditButton = new JButton("Edit point");
@@ -52,15 +52,15 @@ public class InputPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String[] inputs = new String[2];
-                inputs[0] = xCoordinate.getText();
-                inputs[1] = yCoordinate.getText();
+                inputs[0] = "" + xCoordinate.getValue();
+                inputs[1] = "" + yCoordinate.getValue();
 
-                double[] chords = new double[2];
+                int[] chords = new int[2];
                 
                 for (int i = 0; i < 2; i++) {
                     if (inputs[i].length() > 0) {
                         try {
-                            chords[i] = Double.parseDouble(inputs[i]);
+                            chords[i] = Integer.parseInt(inputs[i]);
                         } catch (NumberFormatException ex) {
                             JOptionPane.showMessageDialog(null, "Please enter a valid coordinate.");
                             return;
@@ -73,8 +73,8 @@ public class InputPanel extends JPanel {
                 
                 Main.window.drawPanel.addPoint(new Point(chords[0], chords[1]));
                 JOptionPane.showMessageDialog(null, "Coordinate added at point (" + chords[0] +"," + chords[1] + ").");
-                xCoordinate.setText("");
-                yCoordinate.setText("");
+                xCoordinate.setValue(0);
+                yCoordinate.setValue(0);
                 
                 int length = Main.window.drawPanel.getPoints().length;
                 String[] stringPoints = new String[length];
@@ -104,7 +104,7 @@ public class InputPanel extends JPanel {
                 
                 switch(coordinateEditBox.getSelectedIndex()) {
                     case 0:
-                        Main.window.drawPanel.editPoint(pointBox.getSelectedIndex(), new Point(Double.parseDouble(JOptionPane.showInputDialog("X coordinate:")), Double.parseDouble(JOptionPane.showInputDialog("Y coordinate:"))));
+                        Main.window.drawPanel.editPoint(pointBox.getSelectedIndex(), new Point(Integer.parseInt(JOptionPane.showInputDialog("X coordinate:")), Integer.parseInt(JOptionPane.showInputDialog("Y coordinate:"))));
                         break;
                     case 1:
                         Main.window.drawPanel.removePoint(pointBox.getSelectedIndex());
