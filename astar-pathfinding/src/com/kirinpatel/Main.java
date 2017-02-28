@@ -11,7 +11,7 @@ import com.kirinpatel.graphics.Window;
  * This class serves as a center for the application.
  * 
  * @author Kirin Patel
- * @version 0.2
+ * @version 1.0
  * @see com.kirinpatel.graphics.Window
  */
 public class Main {

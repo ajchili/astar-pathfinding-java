@@ -13,7 +13,7 @@ import javax.swing.*;
 /**
  *
  * @author Kirin Patel
- * @version 0.4
+ * @version 0.5
  * @see javax.swing.JPanel
  * @see com.kirinpatel.util.Point
  * @see com.kirinpatel.util.Line
@@ -22,7 +22,7 @@ public class DrawPanel extends JPanel {
     
     private int width, height;
     private Point[] points;
-    private Line[] lines;
+    private Line[] lines, path;
     
     /**
      * Main constructor that will setup the DrawPanel class.
@@ -44,6 +44,7 @@ public class DrawPanel extends JPanel {
         height = getHeight();
         
         createLines();
+        getPath();
         
         g.setColor(Color.darkGray);
         g.fillRect(0, 0, getWidth(), getHeight());
@@ -223,5 +224,73 @@ public class DrawPanel extends JPanel {
                 }
             }
         }
+    }
+    
+    public Line[] getConnectedLines(Point p) {
+        Line[] connectedLines = new Line[0];
+        
+        for (int i = 0; i < lines.length; i++) {
+            if (p.equals(new Point(lines[i].getX1(), lines[i].getY1())) || p.equals(new Point(lines[i].getX2(), lines[i].getY2()))) {
+                int size = connectedLines.length + 1;
+        
+                Line[] oldLines = connectedLines;
+                connectedLines = new Line[size];
+                for (int j = 0; j < size; j++) {
+                    if (j != oldLines.length) {
+                        connectedLines[j] = oldLines[j];
+                    } else {
+                        connectedLines[i] = lines[i];
+                    }
+                }
+            }
+        }
+        
+        return connectedLines;
+    }
+    
+    public Line[] getPath() {
+        if (lines.length == 0 || getStart() == null || getEnd() == null)
+            return null;
+        
+        boolean hasReachedEnd = false;
+        Point currentLocation = getStart();
+        double distanceToEnd = getStart().getDistance(getEnd());
+        path = new Line[0];
+        
+        do {
+            double newShortestDistance = 0;
+            Point newLocation;
+            
+            if (currentLocation.equals(getEnd())) {
+                hasReachedEnd = true;
+            }
+            
+            Point[] possiblePoints = new Point[0];
+            
+            for (Point p : points) {
+                if (p.getDistance(getEnd()) < distanceToEnd) {
+                    int size = possiblePoints.length + 1;
+                    Point[] oldPossiblePoints = possiblePoints;
+                    possiblePoints = new Point[size];
+                    for (int j = 0; j < size; j++) {
+                        if (j != oldPossiblePoints.length) {
+                            possiblePoints[j] = oldPossiblePoints[j];
+                        } else {
+                            possiblePoints[j] = p;
+                        }
+                    }
+                } else if (p.getDistance(getEnd()) == 0) {
+                    hasReachedEnd = true;
+                }
+            }
+            
+            System.out.println(possiblePoints.length);
+            for (Point p : possiblePoints) {
+                System.out.println(p.toString());
+            }
+            hasReachedEnd = true;
+        } while(!hasReachedEnd);
+        
+        return path;
     }
 }

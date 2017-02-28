@@ -14,13 +14,18 @@ import javax.swing.*;
 /**
  *
  * @author Kirin Patel
- * @version 0.3
+ * @version 1.0
  * @see javax.swing.JPanel
+ * @see com.kirinpatel.graphics.DrawPanel
+ * @see com.kirinpatel.util.Point
  */
 public class InputPanel extends JPanel {
     
     private final String[] COORDINATE_EDIT_BOX_OPTIONS = { "Edit point", "Remove point", "Set as start", "Set as end" };
     
+    /**
+     * Main constructor that will create the InputPanel.
+     */
     public InputPanel() {
         super();
         
