@@ -10,18 +10,21 @@ import java.awt.Graphics;
 /**
  *
  * @author Kirin Patel
- * @version 0.2
+ * @version 0.3
  * @see com.kirinpatel.util.Line
  * @see com.kirinpatel.util.Point
  */
-public class Node {
+public class Node extends Point {
     
     private Point point;
     private Point[] points;
     private Line[] lines, connectedLines;
     
     public Node(Point point, Point[] points, Line[] lines) {
+        super(point.getX(), point.getY());
+        
         setPoint(point);
+        setPoints(points);
         setLines(lines);
         
         determineConnectedLines();
@@ -97,7 +100,7 @@ public class Node {
         determineConnectedLines();
         
         if (this.point.isEnd())
-            return null;
+            return this;
         
         Point nextDestination = null;
         int size = 0;
@@ -136,10 +139,14 @@ public class Node {
         }
         
         for (int i = 0; i < possiblePointsToBeNextNode.length; i++) {
-            if (i != 0) {
+            if (i == 0) {
                 nextDestination = possiblePointsToBeNextNode[i];
             } else {
-                // TODO: Finish this
+                if (this.point.getDistance(possiblePointsToBeNextNode[i]) < this.point.getDistance(nextDestination)) {
+                    if (possiblePointsToBeNextNode[i].getDistance(point) < nextDestination.getDistance(point)) {
+                        nextDestination = possiblePointsToBeNextNode[i];
+                    }
+                }
             }
         }
         

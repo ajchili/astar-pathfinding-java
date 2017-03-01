@@ -241,8 +241,40 @@ public class DrawPanel extends JPanel {
     }
     
     public Line[] getPath() {
-        if (lines.length == 0 || getStart() == null || getEnd() == null)
+        if (lines.length < 2 || getStart() == null || getEnd() == null)
             return null;
+         
+        Node start = new Node(getStart(), points, lines);
+        Node end = new Node(getEnd(), points, lines);
+        boolean hasReachedEnd = false;
+        
+        Node[] nodePath = new Node[2];
+        nodePath[0] = start;
+        nodePath[1] = start.determineNextStep(getEnd());
+        
+        do {
+            if (nodePath[nodePath.length - 1].getPoint().isEnd()) {
+                hasReachedEnd = true;
+            } else {
+                Node[] oldNodePath = nodePath;
+                nodePath = new Node[oldNodePath.length + 1];
+                
+                for (int i = 0; i < nodePath.length; i++) {
+                    if (i < oldNodePath.length) {
+                        nodePath[i] = oldNodePath[i];
+                    } else {
+                        nodePath[i] = nodePath[i - 1].determineNextStep(getEnd());
+                        if (nodePath[i].getPoint().isEnd()) {
+                            hasReachedEnd = true;
+                        }
+                    }
+                }
+            }
+        } while(!hasReachedEnd);
+        
+        for (Node n : nodePath) {
+            System.out.println(n);
+        }
         
         return path;
     }
