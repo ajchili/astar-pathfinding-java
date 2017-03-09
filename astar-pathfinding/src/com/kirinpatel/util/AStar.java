@@ -6,10 +6,9 @@
 package com.kirinpatel.util;
 
 /**
- *
  * @author Kirin Patel
  * @version 0.1
  */
 public class AStar {
-    
+
 }
