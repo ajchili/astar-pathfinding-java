@@ -5,41 +5,41 @@
  */
 package com.kirinpatel.graphics;
 
-import java.awt.*;
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * This class will create the display in which the application is run.
- * 
+ *
  * @author Kirin Patel
  * @version 1.1
  * @see javax.swing.JFrame;
- * @see com.krinpatel.graphics.DrawPanel
+ * @see com.kirinpatel.graphics.DrawPanel
  * @see com.kirinpatel.graphics.InputPanel
  */
 public class Window extends JFrame {
-    
-    public DrawPanel drawPanel;
-    
+
+    public DrawPanel drawPanel; // public final (?)
+
     /**
      * Main constructor that will create the Window.
-     * 
-     * @param title Title
+     * @param s
      */
-    public Window(String title) {
-        super(title);
-        
+    public Window(String s) {
+        // title is always "A* Pathfinding"
+        super("A* Pathfinding");
+
         setSize(1280, 720);
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(640, 480));
         setMaximumSize(new Dimension(1280, 720));
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        
+
         drawPanel = new DrawPanel();
         add(drawPanel, BorderLayout.CENTER);
         add(new InputPanel(), BorderLayout.SOUTH);
-        
+
         setVisible(true);
     }
 }
