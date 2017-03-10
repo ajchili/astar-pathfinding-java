@@ -12,7 +12,7 @@ import java.awt.Graphics;
  * This class contains all information pertaining to the Line class.
  * 
  * @author Kirin Patel
- * @version 1.2
+ * @version 1.3
  * @see java.awt.Color
  * @see java.awt.Graphics
  */
@@ -128,6 +128,21 @@ public class Line {
      */
     public double getLength() {
         return Math.sqrt((Math.pow(Math.abs(x2) - Math.abs(x1),2) + Math.pow(Math.abs(y2) - Math.abs(y1), 2)));
+    }
+    
+    /**
+     * Provides the location of a point on the line.
+     * 
+     * @param p Point
+     * @return Location of point, either start or end
+     */
+    public int getPointPosition(Point p) {
+        if (p.getX() == x1 && p.getY() == y1)
+            return 0;
+        else if (p.getX() == x2 && p.getY() == y2)
+            return 1;
+        else
+            return 2;
     }
     
     /**

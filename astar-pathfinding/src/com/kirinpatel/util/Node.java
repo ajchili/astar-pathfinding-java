@@ -10,7 +10,7 @@ import java.awt.Graphics;
 /**
  *
  * @author Kirin Patel
- * @version 0.3
+ * @version 0.4
  * @see com.kirinpatel.util.Line
  * @see com.kirinpatel.util.Point
  */
@@ -66,6 +66,10 @@ public class Node extends Point {
         return points;
     }
     
+    public Line[] getLines() {
+        return lines;
+    }
+    
     public Line[] getConnectedLines() {
         return connectedLines;
     }
@@ -96,10 +100,13 @@ public class Node extends Point {
      * @param point Ending point
      * @return Returns next closes node to point
      */
-    public Node determineNextStep(Point point) {
+    public Node determineNextStep(Point point, Point[] traveledPoints) {
         determineConnectedLines();
         
-        if (this.point.isEnd())
+        /**
+         * Checks to see if this Node is the end
+         */
+        if (this.point.isEnd() || this.point.equals(point))
             return this;
         
         Point nextDestination = null;
@@ -115,12 +122,18 @@ public class Node extends Point {
             possiblePointsToBeNextNode = new Point[size];
             Point possiblePoint = null;
             
+            /**
+             * Determine location of point
+             */
             if (this.point.equals(startOfLine)) {
-                possiblePoint = new Point(l.getX2(), l.getY2());
+                possiblePoint = endOfLine;
             } else {
-                possiblePoint = new Point(l.getX1(), l.getY1());
+                possiblePoint = startOfLine;
             }
             
+            /**
+             * Get real point
+             */
             for (Point p : points) {
                 Point tempPoint = new Point(p.getX(), p.getY());
                 if (tempPoint.equals(possiblePoint)) {
@@ -129,6 +142,9 @@ public class Node extends Point {
                 }
             }
             
+            /**
+             * Add point to array
+             */
             for (int i = 0; i < size; i++) {
                 if (i != oldPossiblePointsToBeNextNode.length) {
                     possiblePointsToBeNextNode[i] = oldPossiblePointsToBeNextNode[i];
@@ -142,13 +158,33 @@ public class Node extends Point {
             if (i == 0) {
                 nextDestination = possiblePointsToBeNextNode[i];
             } else {
-                if (this.point.getDistance(possiblePointsToBeNextNode[i]) < this.point.getDistance(nextDestination)) {
+                if (possiblePointsToBeNextNode[i].isEnd()) {
+                    nextDestination = possiblePointsToBeNextNode[i];
+                    break;
+                } else if (!possiblePointsToBeNextNode[i].isStart() && this.point.getDistance(possiblePointsToBeNextNode[i]) < this.point.getDistance(nextDestination)) {
                     if (possiblePointsToBeNextNode[i].getDistance(point) < nextDestination.getDistance(point)) {
-                        nextDestination = possiblePointsToBeNextNode[i];
+                        boolean canBeNextPoint = true;
+                        for (Point p : traveledPoints) {
+                            if (possiblePointsToBeNextNode[i].equals(p))
+                                canBeNextPoint = false;
+                        }
+                        
+                        if (canBeNextPoint)
+                            nextDestination = possiblePointsToBeNextNode[i];
                     }
                 }
             }
         }
+        
+        /**
+         * 
+         */
+        Point[] oldTraveledPoints = traveledPoints;
+        traveledPoints = new Node[oldTraveledPoints.length];
+        for (int i = 0; i < oldTraveledPoints.length; i++) {
+            traveledPoints[i] = oldTraveledPoints[i];
+        }
+        traveledPoints[traveledPoints.length - 1] = nextDestination;
         
         return new Node(nextDestination, points, lines);
     }

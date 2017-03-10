@@ -8,17 +8,19 @@ package com.kirinpatel.graphics;
 import com.kirinpatel.util.Point;
 import com.kirinpatel.util.Line;
 import com.kirinpatel.util.Node;
+import com.kirinpatel.util.Path;
 import java.awt.*;
 import javax.swing.*;
 
 /**
  *
  * @author Kirin Patel
- * @version 0.6
+ * @version 0.7
  * @see javax.swing.JPanel
  * @see com.kirinpatel.util.Point
  * @see com.kirinpatel.util.Line
  * @see com.kirinpatel.util.Node
+ * @see com.kirinpatel.util.Path
  */
 public class DrawPanel extends JPanel {
     
@@ -46,7 +48,9 @@ public class DrawPanel extends JPanel {
         height = getHeight();
         
         createLines();
-        getPath();
+        
+        if (lines.length >= 2 && getStart() != null && getEnd() != null)
+            Path.getPath(new Node(getStart(), points, lines), new Node(getEnd(), points, lines));
         
         g.setColor(Color.darkGray);
         g.fillRect(0, 0, getWidth(), getHeight());
@@ -240,17 +244,17 @@ public class DrawPanel extends JPanel {
         return connectedLines;
     }
     
-    public Line[] getPath() {
+    /*public Line[] getPath() {
         if (lines.length < 2 || getStart() == null || getEnd() == null)
             return null;
          
-        Node start = new Node(getStart(), points, lines);
-        Node end = new Node(getEnd(), points, lines);
+        final Node START = new Node(getStart(), points, lines);
+        final Node END = new Node(getEnd(), points, lines);
         boolean hasReachedEnd = false;
         
         Node[] nodePath = new Node[2];
-        nodePath[0] = start;
-        nodePath[1] = start.determineNextStep(getEnd());
+        nodePath[0] = START;
+        nodePath[1] = START.determineNextStep(END);
         
         do {
             if (nodePath[nodePath.length - 1].getPoint().isEnd()) {
@@ -263,12 +267,16 @@ public class DrawPanel extends JPanel {
                     if (i < oldNodePath.length) {
                         nodePath[i] = oldNodePath[i];
                     } else {
-                        nodePath[i] = nodePath[i - 1].determineNextStep(getEnd());
-                        if (nodePath[i].getPoint().isEnd()) {
+                        nodePath[i] = nodePath[i - 1].determineNextStep(END);
+                        if (nodePath[i].isEnd()) {
                             hasReachedEnd = true;
                         }
                     }
                 }
+            }
+            
+            if (nodePath.length > 10) {
+                hasReachedEnd = true;
             }
         } while(!hasReachedEnd);
         
@@ -277,5 +285,5 @@ public class DrawPanel extends JPanel {
         }
         
         return path;
-    }
+    }*/
 }
