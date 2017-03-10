@@ -69,19 +69,15 @@ public class Node extends Point {
     public Point[] getPoints() {
         return points;
     }
-<<<<<<< HEAD
     
     public Line[] getLines() {
         return lines;
     }
-    
-=======
 
     public void setPoints(Point[] points) {
         this.points = points;
     }
-
->>>>>>> origin/master
+    
     public Line[] getConnectedLines() {
         return connectedLines;
     }
@@ -118,16 +114,11 @@ public class Node extends Point {
      */
     public Node determineNextStep(Point point, Point[] traveledPoints) {
         determineConnectedLines();
-<<<<<<< HEAD
         
         /**
          * Checks to see if this Node is the end
          */
         if (this.point.isEnd() || this.point.equals(point))
-=======
-
-        if (this.point.isEnd())
->>>>>>> origin/master
             return this;
 
         Point nextDestination = null;
@@ -142,27 +133,19 @@ public class Node extends Point {
             Point[] oldPossiblePointsToBeNextNode = possiblePointsToBeNextNode;
             possiblePointsToBeNextNode = new Point[size];
             Point possiblePoint = null;
-<<<<<<< HEAD
             
             /**
              * Determine location of point
              */
-=======
-
->>>>>>> origin/master
             if (this.point.equals(startOfLine)) {
                 possiblePoint = endOfLine;
             } else {
                 possiblePoint = startOfLine;
             }
-<<<<<<< HEAD
             
             /**
              * Get real point
              */
-=======
-
->>>>>>> origin/master
             for (Point p : points) {
                 Point tempPoint = new Point(p.getX(), p.getY());
                 if (tempPoint.equals(possiblePoint)) {
@@ -170,14 +153,10 @@ public class Node extends Point {
                     break;
                 }
             }
-<<<<<<< HEAD
             
             /**
              * Add point to array
              */
-=======
-
->>>>>>> origin/master
             for (int i = 0; i < size; i++) {
                 if (i != oldPossiblePointsToBeNextNode.length) {
                     possiblePointsToBeNextNode[i] = oldPossiblePointsToBeNextNode[i];
@@ -208,7 +187,6 @@ public class Node extends Point {
                 }
             }
         }
-<<<<<<< HEAD
         
         /**
          * 
@@ -220,9 +198,6 @@ public class Node extends Point {
         }
         traveledPoints[traveledPoints.length - 1] = nextDestination;
         
-=======
-
->>>>>>> origin/master
         return new Node(nextDestination, points, lines);
     }
 

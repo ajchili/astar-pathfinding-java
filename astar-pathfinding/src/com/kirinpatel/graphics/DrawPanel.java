@@ -5,15 +5,10 @@
  */
 package com.kirinpatel.graphics;
 
+import com.kirinpatel.util.Point;
 import com.kirinpatel.util.Line;
 import com.kirinpatel.util.Node;
-<<<<<<< HEAD
 import com.kirinpatel.util.Path;
-import java.awt.*;
-=======
-import com.kirinpatel.util.Point;
-
->>>>>>> origin/master
 import javax.swing.*;
 import java.awt.*;
 
@@ -51,15 +46,10 @@ public class DrawPanel extends JPanel {
         int height = getHeight();
 
         createLines();
-<<<<<<< HEAD
         
         if (lines.length >= 2 && getStart() != null && getEnd() != null)
             Path.getPath(new Node(getStart(), points, lines), new Node(getEnd(), points, lines));
         
-=======
-        getPath();
-
->>>>>>> origin/master
         g.setColor(Color.darkGray);
         g.fillRect(0, 0, getWidth(), getHeight());
 
@@ -243,7 +233,6 @@ public class DrawPanel extends JPanel {
 
         return connectedLines;
     }
-<<<<<<< HEAD
     
     /*public Line[] getPath() {
         if (lines.length < 2 || getStart() == null || getEnd() == null)
@@ -303,14 +292,4 @@ public class DrawPanel extends JPanel {
         
         return path;
     }*/
-=======
-        } while (!hasReachedEnd);
-
-        for (Node n : nodePath) {
-            System.out.println(n);
-        }
-
-        return path; // never used (?)
-    }
->>>>>>> origin/master
 }
