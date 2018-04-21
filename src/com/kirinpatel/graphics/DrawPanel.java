@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.kirinpatel.graphics;
 
 import com.kirinpatel.util.Point;
@@ -11,39 +7,24 @@ import com.kirinpatel.util.Node;
 import com.kirinpatel.util.Path;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-/**
- * @author Kirin Patel
- * @version 0.7
- * @see javax.swing.JPanel
- * @see com.kirinpatel.util.Point
- * @see com.kirinpatel.util.Line
- * @see com.kirinpatel.util.Node
- * @see com.kirinpatel.util.Path
- */
 public class DrawPanel extends JPanel {
 
     private Point[] points;
     private Line[] lines, path;
 
-    /**
-     * Main constructor that will setup the DrawPanel class.
-     */
     public DrawPanel() {
         super();
         points = new Point[0];
         lines = new Line[0];
+        addMouseListener(new DrawPanelMouseEventListener());
     }
 
-    /**
-     * Displays given graphics to the screen.
-     */
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-
-        int width = getWidth();
-        int height = getHeight();
 
         createLines();
         
@@ -233,63 +214,32 @@ public class DrawPanel extends JPanel {
 
         return connectedLines;
     }
-    
-    /*public Line[] getPath() {
-        if (lines.length < 2 || getStart() == null || getEnd() == null)
-            return null;
-         
-        final Node START = new Node(getStart(), points, lines);
-        final Node END = new Node(getEnd(), points, lines);
-=======
 
-    public Line[] getPath() {
-        if (lines.length < 2 || getStart() == null || getEnd() == null)
-            return null;
+    private class DrawPanelMouseEventListener implements MouseListener {
 
-        Node start = new Node(getStart(), points, lines);
-        Node end = new Node(getEnd(), points, lines);
->>>>>>> origin/master
-        boolean hasReachedEnd = false;
+        @Override
+        public void mouseClicked(MouseEvent e) {
 
-        Node[] nodePath = new Node[2];
-<<<<<<< HEAD
-        nodePath[0] = START;
-        nodePath[1] = START.determineNextStep(END);
-        
-=======
-        nodePath[0] = start;
-        nodePath[1] = start.determineNextStep(getEnd());
-
->>>>>>> origin/master
-        do {
-            if (nodePath[nodePath.length - 1].getPoint().isEnd()) {
-                hasReachedEnd = true;
-            } else {
-                Node[] oldNodePath = nodePath;
-                nodePath = new Node[oldNodePath.length + 1];
-
-                for (int i = 0; i < nodePath.length; i++) {
-                    if (i < oldNodePath.length) {
-                        nodePath[i] = oldNodePath[i];
-                    } else {
-                        nodePath[i] = nodePath[i - 1].determineNextStep(END);
-                        if (nodePath[i].isEnd()) {
-                            hasReachedEnd = true;
-                        }
-                    }
-                }
-            }
-<<<<<<< HEAD
-            
-            if (nodePath.length > 10) {
-                hasReachedEnd = true;
-            }
-        } while(!hasReachedEnd);
-        
-        for (Node n : nodePath) {
-            System.out.println(n);
         }
-        
-        return path;
-    }*/
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            addPoint(new Point(e.getX(), e.getY()));
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
+        }
+    }
 }

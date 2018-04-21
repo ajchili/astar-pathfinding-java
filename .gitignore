@@ -12,3 +12,7 @@
 hs_err_pid*
 /astar-pathfinding/nbproject/private/
 /astar-pathfinding/build/
+*.DS_Store
+\.idea/
+manifest\.mf
+build\.xml
